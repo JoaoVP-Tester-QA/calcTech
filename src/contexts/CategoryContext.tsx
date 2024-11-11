@@ -1,6 +1,12 @@
 // src/context/CategoryContext.tsx
 
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+} from "react";
 
 interface CategoryContextType {
   selectedCategory: string | null;
@@ -9,35 +15,56 @@ interface CategoryContextType {
   clearCategory: () => void;
 }
 
-export const CategoryContext = createContext<CategoryContextType | undefined>(undefined);
+const CategoryContext = createContext<CategoryContextType>(
+  {} as CategoryContextType
+);
 
-export const CategoryProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const useCategoryContext = () => {
+  return useContext(CategoryContext);
+};
+
+export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedData = localStorage.getItem('selectedMethod');
+    const storedData = localStorage.getItem("selectedMethod");
     if (storedData) {
-      const { category, name } = JSON.parse(storedData);
-      setSelectedCategory(category);
-      setSelectedMethod(name);
+      try {
+        const { category, name } = JSON.parse(storedData);
+        setSelectedCategory(category);
+        setSelectedMethod(name);
+      } catch (error) {
+        console.error("Error parsing stored data:", error);
+        // You can also clear the corrupted data from localStorage if needed:
+        // localStorage.removeItem("selectedMethod");
+      }
     }
   }, []);
 
   const setCategoryAndMethod = (category: string, name: string) => {
     setSelectedCategory(category);
     setSelectedMethod(name);
-    localStorage.setItem('selectedMethod', JSON.stringify({ category, name }));
+    localStorage.setItem("selectedMethod", JSON.stringify({ category, name }));
   };
 
   const clearCategory = () => {
     setSelectedCategory(null);
     setSelectedMethod(null);
-    localStorage.removeItem('selectedMethod');
+    localStorage.removeItem("selectedMethod");
   };
 
   return (
-    <CategoryContext.Provider value={{ selectedCategory, selectedMethod, setCategoryAndMethod, clearCategory }}>
+    <CategoryContext.Provider
+      value={{
+        selectedCategory,
+        selectedMethod,
+        setCategoryAndMethod,
+        clearCategory,
+      }}
+    >
       {children}
     </CategoryContext.Provider>
   );

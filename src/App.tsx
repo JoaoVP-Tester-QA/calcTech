@@ -1,12 +1,11 @@
-import './App.css';
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import MainPage from './pages/mainPage';
-import EquationsPage from './pages/EquationsPage';
-import SystemsPage from './pages/SystemsPage';
-import InterpolationPage from './pages/InterpolationPage';
-import ExtrapolationPage from './pages/ExtrapolationPage';
-
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import MainPage from "./pages/mainPage";
+import EquationsPage from "./pages/EquationsPage/EquationsPage";
+import SystemsPage from "./pages/SystemsPage";
+import InterpolationPage from "./pages/InterpolationPage";
+import ExtrapolationPage from "./pages/ExtrapolationPage";
 
 const App: React.FC = () => {
   return (

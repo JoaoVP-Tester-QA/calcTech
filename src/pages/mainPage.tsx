@@ -98,8 +98,6 @@ const MainPage: React.FC = () => {
             />
           )}
 
-          {selectedMethod && <p>Método selecionado: {selectedMethod}</p>}
-
           <button onClick={() => setSelectedCategory(null)}>Voltar</button>
         </div>
       )} 
