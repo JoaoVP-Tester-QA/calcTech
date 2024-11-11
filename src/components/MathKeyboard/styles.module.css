@@ -1,0 +1,85 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 360px; /* Para limitar a largura da calculadora */
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.row button {
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.row button:active {
+  background-color: #ddd;
+}
+
+.row button:focus {
+  outline: none;
+}
+
+.row button:nth-child(4) {
+  background-color: #f2b03d; /* Cor diferente para o botão de subtração */
+  color: white;
+}
+
+.row button:nth-child(1),
+.row button:nth-child(2) {
+  background-color: #8bc34a; /* Cor diferente para os botões 'x' e 'y' */
+  color: white;
+}
+
+.row button:nth-child(6) {
+  background-color: #607d8b; /* Cor diferente para o botão '⌫' */
+  color: white;
+}
+
+.row button:nth-child(7),
+button:nth-child(8) {
+  background-color: #9c27b0; /* Cor diferente para 'π' e 'e' */
+  color: white;
+}
+
+.row button:last-child {
+  background-color: #f44336; /* Cor de fundo para o botão de deletar */
+  color: white;
+  font-size: 28px;
+}
+
+/* Botões de operação */
+.row button:nth-child(3),
+.row button:nth-child(5),
+.row button:nth-child(9),
+.row button:nth-child(11) {
+  background-color: #4caf50;
+  color: white;
+}
+
+.row button:nth-child(10) {
+  background-color: #2196f3;
+  color: white;
+}
