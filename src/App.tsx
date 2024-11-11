@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import MainPage from './pages/mainPage';
+import EquationsPage from './pages/EquationsPage';
+import SystemsPage from './pages/SystemsPage';
+import InterpolationPage from './pages/InterpolationPage';
+import ExtrapolationPage from './pages/ExtrapolationPage';
 
-function App() {
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/equations" element={<EquationsPage />} />
+        <Route path="/systems" element={<SystemsPage />} />
+        <Route path="/interpolation" element={<InterpolationPage />} />
+        <Route path="/extrapolation" element={<ExtrapolationPage />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
