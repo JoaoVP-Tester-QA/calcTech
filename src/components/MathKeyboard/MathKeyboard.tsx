@@ -28,16 +28,15 @@ const MathKeyboard: React.FC<MathKeyboardProps> = ({ onInput }) => {
         <button onClick={() => handleButtonClick("*")}>×</button>
         <button onClick={() => handleButtonClick("/")}>÷</button>
         <button onClick={() => handleButtonClick("^")}>^</button>
-        <button onClick={() => handleButtonClick("(")}>(</button>
+        <button onClick={() => handleButtonClick("^2")}>x²</button>
+       
       </section>
 
       <section className={styles.row}>
+        <button onClick={() => handleButtonClick("(")}>(</button>
         <button onClick={() => handleButtonClick(")")}>)</button>
         <button onClick={() => handleButtonClick("pi")}>π</button>
         <button onClick={() => handleButtonClick("e")}>e</button>
-        <button onClick={handleDelete} style={deleteButtonStyle}>
-          ⌫
-        </button>
       </section>
 
       <section className={styles.row}>
@@ -51,7 +50,9 @@ const MathKeyboard: React.FC<MathKeyboardProps> = ({ onInput }) => {
         <button onClick={() => handleButtonClick("sin(")}>sin</button>
         <button onClick={() => handleButtonClick("cos(")}>cos</button>
         <button onClick={() => handleButtonClick("tan(")}>tan</button>
-        <button onClick={() => handleButtonClick("^2")}>x²</button>
+        <button onClick={handleDelete} style={deleteButtonStyle}>
+          ⌫
+        </button>
       </section>
     </div>
   );

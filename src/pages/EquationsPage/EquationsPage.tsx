@@ -55,7 +55,7 @@ const EquationsPage: React.FC = () => {
 
   const handleCalculate = () => {
     if (!method || !functionInput) {
-      setResult("Por favor, insira uma função.");
+      alert("Por favor, insira uma função :)");
       return;
     }
 
@@ -66,13 +66,13 @@ const EquationsPage: React.FC = () => {
       try {
         if (method === "Bolzano") {
           calculatedResult = bolzanoMethod(functionInput, intervalA, intervalB);
-        } else if (method === "bisection") {
+        } else if (method === "Bissecção") {
           calculatedResult = bisectionMethod(
             functionInput,
             intervalA,
             intervalB
           );
-        } else if (method === "newton") {
+        } else if (method === "Newton-Raphson") {
           calculatedResult = newtonRaphsonMethod(
             functionInput,
             "derivadaDaFuncaoAqui",

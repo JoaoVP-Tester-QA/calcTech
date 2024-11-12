@@ -15,12 +15,10 @@ const ExtrapolationPage: React.FC = () => {
     setResult('');
     setTimeout(() => {
       try {
-        // Convertendo as entradas em arrays de números
         const xVals = xValues.split(',').map(Number);
         const yVals = yValues.split(',').map(Number);
         const xExtra = parseFloat(xExtrapolated);
 
-        // Verificando se a quantidade de valores de x e y corresponde
         if (xVals.length !== yVals.length) {
           setResult('Erro: x e y devem ter o mesmo número de valores.');
         } else {
@@ -72,7 +70,6 @@ const ExtrapolationPage: React.FC = () => {
 
       <button onClick={handleCalculate}>Calcular</button>
 
-      {/* Usando o ResultDisplay para exibir o resultado */}
       <ResultDisplay result={result} loading={loading} />
     </div>
   );

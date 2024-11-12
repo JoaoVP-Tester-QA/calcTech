@@ -1,33 +1,38 @@
-// src/utils/calculations.ts
 import { create, all } from 'mathjs';
 
 const math = create(all, {});
 
 
 //                                                        [Resolução de Equações Lineares]
-                   
+
 // Método de Bolzano
-export const bolzanoMethod = (func: string, a: number, b: number, tolerance: number = 0.0001): number | string => {
+export const bolzanoMethod = (
+  func: string,
+  a: number,
+  b: number,
+  tolerance: number = 0.0001
+): number | string => {
   try {
     const f = math.parse(func).compile();
 
-    let fa = f.evaluate({ x: a });
-    let fb = f.evaluate({ x: b });
-    if (fa * fb >= 0) return "Intervalo inválido";
+    if (f.evaluate({ x: a }) * f.evaluate({ x: b }) >= 0) {
+      return "Invalid interval";
+    }
 
     let c = a;
+
     while (Math.abs(b - a) > tolerance) {
       c = (a + b) / 2;
       const fc = f.evaluate({ x: c });
 
       if (fc === 0) return c;
-      else if (fa * fc < 0) b = c;
+      else if (f.evaluate({ x: a }) * fc < 0) b = c;
       else a = c;
     }
 
     return c;
   } catch (error) {
-    return "Erro na função";
+    return "Function error";
   }
 };
 
