@@ -4,54 +4,62 @@ const math = create(all, {});
 
 //[Resolução de Equações Lineares]
 
-// Método de Bolzano com busca automática de intervalo e arredondamento condicional
+// BOLZANO MODE
 export const bolzanoMethod = (
-    func: string,
-    tolerance: number = 0.0001,
-    maxIterations: number = 1000 // Limite para evitar loops infinitos
+  func: string,
+  tolerance: number = 0.0001,
+  maxIterations: number = 1000
 ): number | string => {
-    try {
-        const f = math.parse(func).compile();
+  try {
+      const f = math.parse(func).compile();
 
-        // Inicializa os valores de a e b
-        let a = -1;
-        let b = 1;
-        let iterations = 0;
+      let a = -10;
+      let b = 10;
+      let iterations = 0;
+      let c: number | undefined;
 
-        // Expande o intervalo até encontrar um válido
-        while (f.evaluate({ x: a }) * f.evaluate({ x: b }) >= 0) {
-            // Incrementa a e b de forma simétrica em torno de 0
-            a -= 10;
-            b += 10;
-            iterations++;
+      while (f.evaluate({ x: a }) * f.evaluate({ x: b }) >= 0) {
+          a -= 10;
+          b += 10;
+          iterations++;
 
-            // Prevenção de loop infinito
-            if (iterations > maxIterations) {
-                return "Could not find a valid interval";
-            }
-        }
+          if (iterations > maxIterations) {
+              return "Could not find a valid interval";
+          }
+      }
 
-        // Aplicação do método de Bolzano para encontrar a raiz
-        let c = a;
-        while (Math.abs(b - a) > tolerance) {
-            c = (a + b) / 2;
-            const fc = f.evaluate({ x: c });
+      while (Math.abs(b - a) > tolerance) {
+          c = (a + b) / 2;
+          const fc = f.evaluate({ x: c });
 
-            if (fc === 0) return c;
-            else if (f.evaluate({ x: a }) * fc < 0) b = c;
-            else a = c;
-        }
+          if (fc === 0) {
+              return c;
+          } else if (f.evaluate({ x: a }) * fc < 0) {
+              b = c;
+          } else {
+              a = c;
+          }
 
-        // Verificação para arredondamento condicional para números inteiros
-        const roundedC = Math.round(c);
-        if (Math.abs(c - roundedC) < tolerance) {
-            return roundedC; // Retorna o valor inteiro se estiver dentro da tolerância
-        }
+          iterations++;
 
-        return c; // Caso contrário, retorna o valor aproximado
-    } catch (error) {
-        return "Function error";
-    }
+          if (iterations > maxIterations) {
+              return "Max iterations reached without finding the root";
+          }
+      }
+
+      if (c !== undefined) {
+          const roundedC = Math.round(c / tolerance) * tolerance;
+          if (Math.abs(c - roundedC) < tolerance) {
+              return roundedC;
+          }
+          return c;
+      } else {
+          return "Error: Unable to calculate root.";
+      }
+
+  } catch (error) {
+      return "Function error: Please check the input.";
+  }
 };
 
 // Método de Bissecção
