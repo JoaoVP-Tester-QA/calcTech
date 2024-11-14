@@ -77,11 +77,7 @@ const EquationsPage: React.FC = () => {
                 } else if (method === "Newton-Raphson") {
                     calculatedResult = newtonRaphsonMethod(functionInput);
                 } else if (method === "Secante") {
-                    calculatedResult = secantMethod(
-                        functionInput,
-                        intervalA,
-                        intervalB
-                    );
+                    calculatedResult = secantMethod(functionInput);
                 }
             } catch (error) {
                 calculatedResult =
@@ -146,7 +142,6 @@ const EquationsPage: React.FC = () => {
                     result !== null && <div>Resultado: {result}</div>
                 )}
 
-                {/* Botão de voltar */}
                 <button onClick={() => navigate(-1)}>Voltar</button>
             </div>
         </div>

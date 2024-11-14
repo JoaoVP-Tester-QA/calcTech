@@ -121,6 +121,7 @@ export const newtonRaphsonMethod = (
     try {
         const derivative = math.derivative(func, 'x').toString();
         const scope = { x: 0 };
+        func = func.replace(/\be\b/g, `${Math.E}`).replace(/\bpi\b/gi, `${Math.PI}`);
         const f = math.parse(func).compile();
         const fPrime = math.parse(derivative).compile();
         
@@ -153,12 +154,13 @@ export const newtonRaphsonMethod = (
 // Método da Secante
 export const secantMethod = (
     func: string,
-    a: number,
-    b: number,
+    a: number = -10,
+    b: number = 10,
     tolerance: number = 0.0001,
     maxIterations: number = 100
 ): number | string => {
     try {
+        // Compilar a função do usuário
         const f = math.parse(func).compile();
 
         let fa = f.evaluate({ x: a });
@@ -168,11 +170,21 @@ export const secantMethod = (
         let iteration = 0;
 
         while (iteration < maxIterations) {
-            if (Math.abs(fa - fb) < tolerance) break;
+            // Verificar se o divisor é muito próximo de zero
+            if (Math.abs(fa - fb) < tolerance) {
+                return "Falha: A diferença entre f(a) e f(b) está muito próxima de zero.";
+            }
 
+            // Calcular o próximo ponto usando a fórmula da secante
             c = b - (fb * (b - a)) / (fb - fa);
             const fc = f.evaluate({ x: c });
 
+            // Verificar se f(c) está suficientemente próximo de zero
+            if (Math.abs(fc) < tolerance) {
+                return c;  // Retornar a raiz aproximada
+            }
+
+            // Preparar para a próxima iteração
             a = b;
             b = c;
             fa = fb;
@@ -181,9 +193,10 @@ export const secantMethod = (
             iteration++;
         }
 
-        return c;
+        return "Falha: Número máximo de iterações atingido sem encontrar a raiz.";
     } catch (error) {
-        return "Erro na função";
+        console.error("Erro ao processar a função:", error);
+        return "Erro: Verifique a função fornecida.";
     }
 };
 

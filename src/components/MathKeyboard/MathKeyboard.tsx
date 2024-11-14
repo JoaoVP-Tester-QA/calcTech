@@ -21,32 +21,32 @@ const MathKeyboard: React.FC<MathKeyboardProps> = ({ onInput }) => {
         <button onClick={() => handleButtonClick("x")}>x</button>
         <button onClick={() => handleButtonClick("+")}>+</button>
         <button onClick={() => handleButtonClick("-")}>−</button>
+        <button onClick={() => handleButtonClick("*")}>×</button>
       </section>
 
       <section className={styles.row}>
-        <button onClick={() => handleButtonClick("*")}>×</button>
         <button onClick={() => handleButtonClick("/")}>÷</button>
         <button onClick={() => handleButtonClick("^")}>^</button>
-       
-      </section>
-
-      <section className={styles.row}>
         <button onClick={() => handleButtonClick("(")}>(</button>
         <button onClick={() => handleButtonClick(")")}>)</button>
+      </section>
+
+      <section className={styles.row}>
         <button onClick={() => handleButtonClick("pi")}>π</button>
         <button onClick={() => handleButtonClick("e")}>e</button>
-      </section>
-
-      <section className={styles.row}>
-        <button onClick={() => handleButtonClick("sqrt(")}>√</button>
         <button onClick={() => handleButtonClick("log(")}>log</button>
-        <button onClick={() => handleButtonClick("exp(")}>exp</button>
+        <button onClick={() => handleButtonClick("sqrt(")}>√</button>
       </section>
 
       <section className={styles.row}>
+        <button onClick={() => handleButtonClick("exp(")}>exp</button>
         <button onClick={() => handleButtonClick("sin(")}>sin</button>
         <button onClick={() => handleButtonClick("cos(")}>cos</button>
         <button onClick={() => handleButtonClick("tan(")}>tan</button>
+      </section>
+
+      <section className={styles.row}>
+
         <button onClick={handleDelete} style={deleteButtonStyle}>
           ⌫
         </button>

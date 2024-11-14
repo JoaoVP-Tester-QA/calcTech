@@ -65,9 +65,10 @@ button:nth-child(8) {
 }
 
 .row button:last-child {
-  background-color: #f44336; /* Cor de fundo para o botão de deletar */
+  background-color: #92443f; /* Cor de fundo para o botão de deletar */
   color: white;
   font-size: 28px;
+
 }
 
 /* Botões de operação */
