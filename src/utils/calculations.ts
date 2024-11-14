@@ -203,8 +203,19 @@ export const secantMethod = (
 //                                                          [Resolução de Sistemas Lineares]
 
 // Eliminação de Gauss
-export const gaussianElimination = (matrix: number[][]): number[] | string => {
+export const gaussianElimination = (equationStrings: string[]): number[] | string => {
     try {
+        // Parse each equation string into a row of numbers (matrix row)
+        const matrix = equationStrings.map((equation) => {
+            const row = equation
+                .split(/\s+/) // Split by spaces or multiple spaces
+                .map((numStr) => parseFloat(numStr))
+                .filter((num) => !isNaN(num)); // Convert to numbers and filter out any NaNs
+            if (row.length === 0) throw new Error("Invalid input");
+            return row;
+        });
+
+        // Augmented matrix for Gaussian elimination
         const augmentedMatrix = matrix.map((row) => [...row]);
         const n = augmentedMatrix.length;
 
@@ -219,6 +230,7 @@ export const gaussianElimination = (matrix: number[][]): number[] | string => {
                 }
             }
 
+            // Swap rows for partial pivoting
             [augmentedMatrix[i], augmentedMatrix[maxRow]] = [
                 augmentedMatrix[maxRow],
                 augmentedMatrix[i],
@@ -239,77 +251,113 @@ export const gaussianElimination = (matrix: number[][]): number[] | string => {
                 augmentedMatrix[k][n] -= augmentedMatrix[k][i] * solution[i];
             }
         }
+
         return solution;
     } catch (error) {
-        return "Erro ao resolver o sistema";
+        return "Erro ao resolver o sistema. Verifique a entrada das equações.";
     }
 };
+
 
 //  Gauss-Jacobi
 export const gaussJacobi = (
-    matrix: number[][],
+    equationStrings: string[],
     tolerance = 0.0001,
     maxIterations = 100
 ): number[] | string => {
-    const n = matrix.length;
-    let x = Array(n).fill(0);
-    let xNew = Array(n).fill(0);
-    let iteration = 0;
+    try {
+        // Parse each equation string into a row of numbers
+        const matrix = equationStrings.map((equation) => {
+            const row = equation
+                .split(/\s+/) // Split by whitespace
+                .map((numStr) => parseFloat(numStr))
+                .filter((num) => !isNaN(num)); // Convert to numbers and remove NaNs
+            if (row.length === 0) throw new Error("Invalid input");
+            return row;
+        });
 
-    while (iteration < maxIterations) {
-        for (let i = 0; i < n; i++) {
-            let sum = matrix[i][n];
-            for (let j = 0; j < n; j++) {
-                if (j !== i) {
-                    sum -= matrix[i][j] * x[j];
+        const n = matrix.length;
+        let x = Array(n).fill(0); // Initial guesses for x
+        let xNew = Array(n).fill(0);
+        let iteration = 0;
+
+        while (iteration < maxIterations) {
+            for (let i = 0; i < n; i++) {
+                let sum = matrix[i][n];
+                for (let j = 0; j < n; j++) {
+                    if (j !== i) {
+                        sum -= matrix[i][j] * x[j];
+                    }
                 }
+                xNew[i] = sum / matrix[i][i];
             }
-            xNew[i] = sum / matrix[i][i];
+
+            // Calculate the difference to check for convergence
+            const diff = xNew.reduce(
+                (acc, val, idx) => acc + Math.abs(val - x[idx]),
+                0
+            );
+            if (diff < tolerance) return xNew;
+
+            // Update the old values of x with the new values
+            x = [...xNew];
+            iteration++;
         }
 
-        let diff = xNew.reduce(
-            (acc, val, idx) => acc + Math.abs(val - x[idx]),
-            0
-        );
-        if (diff < tolerance) return xNew;
-
-        x = [...xNew];
-        iteration++;
+        return "O método não convergiu";
+    } catch (error) {
+        return "Erro ao resolver o sistema. Verifique a entrada das equações.";
     }
-
-    return "O método não convergiu";
 };
+
 
 // Gauss Seidel
+// Gauss-Seidel
 export const gaussSeidel = (
-    matrix: number[][],
+    equationStrings: string[],
     tolerance = 0.0001,
     maxIterations = 100
 ): number[] | string => {
-    const n = matrix.length;
-    let x = Array(n).fill(0);
-    let iteration = 0;
+    try {
+        // Parse each equation string into a row of numbers
+        const matrix = equationStrings.map((equation) => {
+            const row = equation
+                .split(/\s+/) // Split by whitespace
+                .map((numStr) => parseFloat(numStr))
+                .filter((num) => !isNaN(num)); // Convert to numbers and remove NaNs
+            if (row.length === 0) throw new Error("Invalid input");
+            return row;
+        });
 
-    while (iteration < maxIterations) {
-        let diff = 0;
-        for (let i = 0; i < n; i++) {
-            let sum = matrix[i][n];
-            for (let j = 0; j < n; j++) {
-                if (j !== i) {
-                    sum -= matrix[i][j] * x[j];
+        const n = matrix.length;
+        let x = Array(n).fill(0); // Initial guesses for x
+        let iteration = 0;
+
+        while (iteration < maxIterations) {
+            let diff = 0;
+            for (let i = 0; i < n; i++) {
+                let sum = matrix[i][n];
+                for (let j = 0; j < n; j++) {
+                    if (j !== i) {
+                        sum -= matrix[i][j] * x[j];
+                    }
                 }
+                const xNew = sum / matrix[i][i];
+                diff += Math.abs(xNew - x[i]);
+                x[i] = xNew;
             }
-            const xNew = sum / matrix[i][i];
-            diff += Math.abs(xNew - x[i]);
-            x[i] = xNew;
+
+            // Check for convergence
+            if (diff < tolerance) return x;
+            iteration++;
         }
 
-        if (diff < tolerance) return x;
-        iteration++;
+        return "O método não convergiu";
+    } catch (error) {
+        return "Erro ao resolver o sistema. Verifique a entrada das equações.";
     }
-
-    return "O método não convergiu";
 };
+
 
 //                                                                    [Interpretação]
 

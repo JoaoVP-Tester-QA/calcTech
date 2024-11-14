@@ -1,22 +1,35 @@
-import React from 'react';
-import Style from './ResultDisplay.module.css';
+// ResultDisplay.tsx
+import React from "react";
 
 interface ResultDisplayProps {
-  result: string | number;
-  loading: boolean;
+    result: string | number | number[]; // Permite string, number ou array de números
+    loading: boolean;
 }
 
 const ResultDisplay: React.FC<ResultDisplayProps> = ({ result, loading }) => {
-  if (loading) {
-    return <div className={Style.loadingText}>Carregando...</div>;
-  }
+    if (loading) return <p>Calculando...</p>;
 
-  return (
-    <div className={Style.resultContainer}>
-      <h2>Resultado:</h2>
-      <p>{result}</p>
-    </div>
-  );
+    // Verifica se o resultado é um array e exibe cada valor separadamente
+    if (Array.isArray(result)) {
+        return (
+            <div>
+                <h3>Resultado:</h3>
+                <ul>
+                    {result.map((value, index) => (
+                        <li key={index}>x{index + 1} = {value}</li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+
+    // Exibe resultado para string ou número
+    return (
+        <div>
+            <h3>Resultado:</h3>
+            <p>{result}</p>
+        </div>
+    );
 };
 
 export default ResultDisplay;
