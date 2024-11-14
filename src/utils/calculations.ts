@@ -114,38 +114,39 @@ export const bisectionMethod = (
 // Método de Newton-Raphson
 export const newtonRaphsonMethod = (
     func: string,
-    derivative: string,
-    initialGuess: number,
+    initialGuess: number = 1,
     tolerance: number = 0.0001,
     maxIterations: number = 100
 ): number | string => {
     try {
+        const derivative = math.derivative(func, 'x').toString();
+        const scope = { x: 0 };
         const f = math.parse(func).compile();
         const fPrime = math.parse(derivative).compile();
-
+        
         let x = initialGuess;
         let iteration = 0;
 
-        // Iterate until max iterations or until the result is within tolerance
         while (iteration < maxIterations) {
             const fx = f.evaluate({ x });
             const fxPrime = fPrime.evaluate({ x });
 
-            // If the value of the function at x is close enough to zero, break out of the loop
             if (Math.abs(fx) < tolerance) break;
 
-            // Newton-Raphson formula: x = x - f(x) / f'(x)
-            if (fxPrime === 0) {
-                return "Derivada igual a zero, não é possível continuar.";
+            if (Math.abs(fxPrime) < tolerance) {
+                return "Derivada muito próxima de zero, não é possível continuar.";
             }
 
             x = x - fx / fxPrime;
             iteration++;
+
+            if (Math.abs(fx) < tolerance) break;
         }
 
         return x;
     } catch (error) {
-        return "Erro na função ou derivada.";
+        console.error("Erro ao processar a função ou derivada:", error);
+        return "Erro na função ou derivada. Verifique a entrada.";
     }
 };
 

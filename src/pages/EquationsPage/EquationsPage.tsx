@@ -34,7 +34,6 @@ const EquationsPage: React.FC = () => {
             setFunctionInput(input);
         }
 
-        // Focar no input modificado
         if (inputRefs.current[inputName]) {
             inputRefs.current[inputName]?.focus();
         }
@@ -76,11 +75,7 @@ const EquationsPage: React.FC = () => {
                 } else if (method === "Bissecção") {
                     calculatedResult = bisectionMethod(functionInput);
                 } else if (method === "Newton-Raphson") {
-                    calculatedResult = newtonRaphsonMethod(
-                        functionInput,
-                        "derivadaDaFuncaoAqui",
-                        initialGuess
-                    );
+                    calculatedResult = newtonRaphsonMethod(functionInput);
                 } else if (method === "Secante") {
                     calculatedResult = secantMethod(
                         functionInput,
@@ -104,11 +99,11 @@ const EquationsPage: React.FC = () => {
             <h3>Método escolhido: {getMethodName()}</h3>
 
             <input
-                ref={(el) => (inputRefs.current["functionInput"] = el)} // Referência do input de função
+                ref={(el) => (inputRefs.current["functionInput"] = el)}
                 type="text"
                 value={functionInput}
                 onChange={(e) => setFunctionInput(e.target.value)}
-                placeholder="Insira a função aqui"
+                placeholder="Insira a sua f(x) aqui"
             />
             <MathKeyboard onInput={(input) => handleInputChange(input, "functionInput")} />
 
