@@ -6,75 +6,86 @@ const math = create(all, {});
 
 // BOLZANO MODE
 export const bolzanoMethod = (
-  func: string,
-  tolerance: number = 0.0001,
-  maxIterations: number = 1000
+    func: string,
+    tolerance: number = 0.0001,
+    maxIterations: number = 1000
 ): number | string => {
-  try {
-      const f = math.parse(func).compile();
+    try {
+        const f = math.parse(func).compile();
 
-      let a = -10;
-      let b = 10;
-      let iterations = 0;
-      let c: number | undefined;
+        let a = -10;
+        let b = 10;
+        let iterations = 0;
+        let c: number | undefined;
 
-      while (f.evaluate({ x: a }) * f.evaluate({ x: b }) >= 0) {
-          a -= 10;
-          b += 10;
-          iterations++;
+        while (f.evaluate({ x: a }) * f.evaluate({ x: b }) >= 0) {
+            a -= 10;
+            b += 10;
+            iterations++;
 
-          if (iterations > maxIterations) {
-              return "Could not find a valid interval";
-          }
-      }
+            if (iterations > maxIterations) {
+                return "Could not find a valid interval";
+            }
+        }
 
-      while (Math.abs(b - a) > tolerance) {
-          c = (a + b) / 2;
-          const fc = f.evaluate({ x: c });
+        while (Math.abs(b - a) > tolerance) {
+            c = (a + b) / 2;
+            const fc = f.evaluate({ x: c });
 
-          if (fc === 0) {
-              return c;
-          } else if (f.evaluate({ x: a }) * fc < 0) {
-              b = c;
-          } else {
-              a = c;
-          }
+            if (fc === 0) {
+                return c;
+            } else if (f.evaluate({ x: a }) * fc < 0) {
+                b = c;
+            } else {
+                a = c;
+            }
 
-          iterations++;
+            iterations++;
 
-          if (iterations > maxIterations) {
-              return "Max iterations reached without finding the root";
-          }
-      }
+            if (iterations > maxIterations) {
+                return "Max iterations reached without finding the root";
+            }
+        }
 
-      if (c !== undefined) {
-          const roundedC = Math.round(c / tolerance) * tolerance;
-          if (Math.abs(c - roundedC) < tolerance) {
-              return roundedC;
-          }
-          return c;
-      } else {
-          return "Error: Unable to calculate root.";
-      }
-
-  } catch (error) {
-      return "Function error: Please check the input.";
-  }
+        if (c !== undefined) {
+            const roundedC = Math.round(c / tolerance) * tolerance;
+            if (Math.abs(c - roundedC) < tolerance) {
+                return roundedC;
+            }
+            return c;
+        } else {
+            return "Error: Unable to calculate root.";
+        }
+    } catch (error) {
+        return "Function error: Please check the input.";
+    }
 };
 
 // Método de Bissecção
 export const bisectionMethod = (
     func: string,
-    a: number,
-    b: number,
-    tolerance: number = 0.0001
+    tolerance: number = 0.0001,
+    maxIterations: number = 1000
 ): number | string => {
     try {
         const f = math.parse(func).compile();
 
+        let a = -10;
+        let b = 10;
+        let iterations = 0;
+
+        while (f.evaluate({ x: a }) * f.evaluate({ x: b }) >= 0) {
+            a -= 10;
+            b += 10;
+            iterations++;
+
+            if (iterations > maxIterations) {
+                return "Could not find a valid interval";
+            }
+        }
+
         let fa = f.evaluate({ x: a });
         let fb = f.evaluate({ x: b });
-        if (fa * fb >= 0) return "Intervalo inválido";
 
         let c = a;
         while (Math.abs(b - a) > tolerance) {
@@ -85,7 +96,16 @@ export const bisectionMethod = (
             else if (fa * fc < 0) b = c;
             else a = c;
         }
-        return c;
+
+        if (c !== undefined) {
+            const roundedC = Math.round(c / tolerance) * tolerance;
+            if (Math.abs(c - roundedC) < tolerance) {
+                return roundedC;
+            }
+            return c;
+        } else {
+            return "Error: Unable to calculate root.";
+        }
     } catch (error) {
         return "Erro na função";
     }

@@ -65,11 +65,7 @@ const EquationsPage: React.FC = () => {
                 if (method === "Bolzano") {
                     calculatedResult = bolzanoMethod(functionInput);
                 } else if (method === "Bissecção") {
-                    calculatedResult = bisectionMethod(
-                        functionInput,
-                        intervalA,
-                        intervalB
-                    );
+                    calculatedResult = bisectionMethod(functionInput);
                 } else if (method === "Newton-Raphson") {
                     calculatedResult = newtonRaphsonMethod(
                         functionInput,
