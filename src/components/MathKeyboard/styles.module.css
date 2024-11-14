@@ -1,7 +1,7 @@
 .container {
   width: 100%;
   margin: 0 auto;
-  max-width: 360px; 
+  max-width: 360px;
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 10px;
@@ -68,7 +68,6 @@ button:nth-child(8) {
   background-color: #92443f; /* Cor de fundo para o botão de deletar */
   color: white;
   font-size: 28px;
-
 }
 
 /* Botões de operação */
@@ -83,4 +82,20 @@ button:nth-child(8) {
 .row button:nth-child(10) {
   background-color: #2196f3;
   color: white;
+}
+
+.deleteButtonStyle {
+  background-color: #ffcccc !important;
+  color: #ff0000;
+  float: right;
+  width: 70px;
+  height: 70px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
