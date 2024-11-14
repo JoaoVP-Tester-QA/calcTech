@@ -1,6 +1,6 @@
 // src/pages/ExtrapolationPage.tsx
 import React, { useState } from 'react';
-import ResultDisplay from '../components/ResultDisplay';
+import ResultDisplay from '../components/resultDisplay/ResultDisplay';
 import { extrapolationMethod } from '../utils/calculations';
 
 const ExtrapolationPage: React.FC = () => {

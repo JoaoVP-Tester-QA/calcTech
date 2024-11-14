@@ -52,10 +52,10 @@ const MainPage: React.FC = () => {
           <h2>Selecione a categoria:</h2>
           <ul>
             <li>
-              <button onClick={() => handleCategorySelect('equations')}>Resolução de Equações Lineares</button>
+              <button onClick={() => handleCategorySelect('equations')}>Resolução de Equações</button>
             </li>
             <li>
-              <button onClick={() => handleCategorySelect('systems')}>Resolução de Sistemas Lineares</button>
+              <button onClick={() => handleCategorySelect('systems')}>Resolução de Sistemas</button>
             </li>
             <li>
               <button onClick={() => handleCategorySelect('interpolation')}>Interpolação</button>

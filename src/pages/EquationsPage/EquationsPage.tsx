@@ -19,15 +19,24 @@ const EquationsPage: React.FC = () => {
     const [result, setResult] = useState<string | number | null>(null);
     const [loading, setLoading] = useState(false);
     const [method, setMethod] = useState<string | null>(null);
-    const mathFieldRef = useRef<HTMLElement | null>(null);
     const [selectedMethod, setSelectedMethod] = useState<string | null>(
         localStorage.getItem("selectedMethod") || null
     );
-    const handleInputChange = (input: string | ((prev: string) => string)) => {
+
+    // Referência aos inputs
+    const inputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
+
+    // Função para lidar com a mudança nos inputs e manter o foco
+    const handleInputChange = (input: string | ((prev: string) => string), inputName: string) => {
         if (typeof input === "string") {
             setFunctionInput((prev) => prev + input);
         } else {
             setFunctionInput(input);
+        }
+
+        // Focar no input modificado
+        if (inputRefs.current[inputName]) {
+            inputRefs.current[inputName]?.focus();
         }
     };
 
@@ -72,7 +81,7 @@ const EquationsPage: React.FC = () => {
                         "derivadaDaFuncaoAqui",
                         initialGuess
                     );
-                } else if (method === "secant") {
+                } else if (method === "Secante") {
                     calculatedResult = secantMethod(
                         functionInput,
                         intervalA,
@@ -89,30 +98,23 @@ const EquationsPage: React.FC = () => {
         }, 1000);
     };
 
-    useEffect(() => {
-        if (mathFieldRef.current) {
-            mathFieldRef.current.addEventListener("input", (event) => {
-                const target = event.target as HTMLInputElement;
-                setFunctionInput(target.value);
-            });
-        }
-    }, []);
-
     return (
         <div className={styles.container}>
             <h2>Resolução de Equações Linear</h2>
             <h3>Método escolhido: {getMethodName()}</h3>
 
             <input
+                ref={(el) => (inputRefs.current["functionInput"] = el)} // Referência do input de função
                 type="text"
                 value={functionInput}
                 onChange={(e) => setFunctionInput(e.target.value)}
                 placeholder="Insira a função aqui"
             />
-            <MathKeyboard onInput={handleInputChange} />
+            <MathKeyboard onInput={(input) => handleInputChange(input, "functionInput")} />
 
             {method === "newton" && (
                 <input
+                    ref={(el) => (inputRefs.current["initialGuess"] = el)} // Referência do input inicial
                     type="number"
                     value={initialGuess}
                     onChange={(e) => setInitialGuess(Number(e.target.value))}
@@ -125,12 +127,14 @@ const EquationsPage: React.FC = () => {
                 method === "secant") && (
                 <>
                     <input
+                        ref={(el) => (inputRefs.current["intervalA"] = el)} // Referência do input Intervalo A
                         type="number"
                         value={intervalA}
                         onChange={(e) => setIntervalA(Number(e.target.value))}
                         placeholder="Intervalo A"
                     />
                     <input
+                        ref={(el) => (inputRefs.current["intervalB"] = el)} // Referência do input Intervalo B
                         type="number"
                         value={intervalB}
                         onChange={(e) => setIntervalB(Number(e.target.value))}

@@ -19,7 +19,6 @@ const MathKeyboard: React.FC<MathKeyboardProps> = ({ onInput }) => {
     <div className={styles.container}>
       <section className={styles.row}>
         <button onClick={() => handleButtonClick("x")}>x</button>
-        <button onClick={() => handleButtonClick("y")}>y</button>
         <button onClick={() => handleButtonClick("+")}>+</button>
         <button onClick={() => handleButtonClick("-")}>−</button>
       </section>
@@ -28,7 +27,6 @@ const MathKeyboard: React.FC<MathKeyboardProps> = ({ onInput }) => {
         <button onClick={() => handleButtonClick("*")}>×</button>
         <button onClick={() => handleButtonClick("/")}>÷</button>
         <button onClick={() => handleButtonClick("^")}>^</button>
-        <button onClick={() => handleButtonClick("^2")}>x²</button>
        
       </section>
 
@@ -42,7 +40,6 @@ const MathKeyboard: React.FC<MathKeyboardProps> = ({ onInput }) => {
       <section className={styles.row}>
         <button onClick={() => handleButtonClick("sqrt(")}>√</button>
         <button onClick={() => handleButtonClick("log(")}>log</button>
-        <button onClick={() => handleButtonClick("ln(")}>ln</button>
         <button onClick={() => handleButtonClick("exp(")}>exp</button>
       </section>
 

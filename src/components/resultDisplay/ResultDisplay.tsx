@@ -1,4 +1,5 @@
 import React from 'react';
+import Style from './ResultDisplay.module.css';
 
 interface ResultDisplayProps {
   result: string | number;
@@ -7,11 +8,11 @@ interface ResultDisplayProps {
 
 const ResultDisplay: React.FC<ResultDisplayProps> = ({ result, loading }) => {
   if (loading) {
-    return <div>Carregando...</div>;
+    return <div className={Style.loadingText}>Carregando...</div>;
   }
 
   return (
-    <div>
+    <div className={Style.resultContainer}>
       <h2>Resultado:</h2>
       <p>{result}</p>
     </div>
