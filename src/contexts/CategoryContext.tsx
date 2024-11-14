@@ -38,8 +38,6 @@ export const CategoryProvider: React.FC<{ children: ReactNode }> = ({
         setSelectedMethod(name);
       } catch (error) {
         console.error("Error parsing stored data:", error);
-        // You can also clear the corrupted data from localStorage if needed:
-        // localStorage.removeItem("selectedMethod");
       }
     }
   }, []);

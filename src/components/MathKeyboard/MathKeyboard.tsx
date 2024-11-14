@@ -45,20 +45,13 @@ const MathKeyboard: React.FC<MathKeyboardProps> = ({ onInput }) => {
         <button onClick={() => handleButtonClick("tan(")}>tan</button>
       </section>
 
-      <section className={styles.row}>
-
-        <button onClick={handleDelete} style={deleteButtonStyle}>
+      <section>
+        <button onClick={handleDelete} className={styles.deleteButtonStyle}>
           ⌫
         </button>
       </section>
     </div>
   );
-};
-
-const deleteButtonStyle: React.CSSProperties = {
-  backgroundColor: "#ffcccc",
-  color: "#ff0000",
-  fontWeight: "bold",
 };
 
 export default MathKeyboard;

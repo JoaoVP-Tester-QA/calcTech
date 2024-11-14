@@ -71,11 +71,6 @@ input[type="text"]:focus {
   border-color: #2980b9;
 }
 
-div {
-  margin: 20px;
-  max-width: 600px;
-  width: 100%;
-}
 
 h2 {
   font-size: 22px;

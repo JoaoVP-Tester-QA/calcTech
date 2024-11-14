@@ -9,6 +9,7 @@ import {
   gaussSeidel,
 } from "../../utils/calculations";
 import styles from "./styles.module.css";
+import { row } from "mathjs";
 
 const EquationsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -46,13 +47,14 @@ const EquationsPage: React.FC = () => {
   };
 
   useEffect(() => {
+    console.log(selectedMethod);
     setMethod(selectedMethod);
     setResult(null);
   }, []);
 
   const getMethodName = () => {
     switch (method) {
-      case "Eliminação de Gauss":
+      case "Eliminação Gaussiana":
         return "Eliminação de Gauss";
       case "Gauss-Jacobi":
         return "Gauss-Jacobi";
@@ -96,32 +98,36 @@ const EquationsPage: React.FC = () => {
       <h3>Método escolhido: {getMethodName()}</h3>
 
       {rows.map((row, index) => (
-        <div key={index} className={styles.row}>
-          <input
-            ref={(el) => (inputRefs.current[`functionInput${index}`] = el)}
-            type="text"
-            value={row}
-            onChange={(e) => handleInputChange(e.target.value, index)}
-            placeholder={`Equação ${index + 1}`}
-          />
-          <div className={styles.buttonGroup}>
-            <button className={styles.addButton} onClick={handleAddRow}>
-              +
-            </button>
-            {rows.length > 1 && (
-              <button
-                className={styles.removeButton}
-                onClick={() => handleRemoveRow(index)}
-              >
-                -
-              </button>
-            )}
+        <section key={index} className={styles.row}>
+          <div className={styles.input_data}>
+            <input
+              ref={(el) => (inputRefs.current[`functionInput${index}`] = el)}
+              type="text"
+              value={row}
+              onChange={(e) => handleInputChange(e.target.value, index)}
+              placeholder={`Equação ${index + 1}`}
+            />
+            <div className={styles.buttonGroup}>
+              {index === 0 && (
+                <button className={styles.addButton} onClick={handleAddRow}>
+                  +
+                </button>
+              )}
+              {rows.length > 1 && index >= 1 && (
+                <button
+                  className={styles.removeButton}
+                  onClick={() => handleRemoveRow(index)}
+                >
+                  -
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        </section>
       ))}
-
-      <MathKeyboard onInput={(input) => handleInputChange(input, rows.length - 1)} />
-
+      <MathKeyboard
+        onInput={(input) => handleInputChange(input, rows.length - 1)}
+      />
       <div className={styles.actionsContainer}>
         <div className={styles.resultArea}>
           {loading ? (
@@ -131,7 +137,7 @@ const EquationsPage: React.FC = () => {
           )}
         </div>
 
-        <div className={styles.buttonGroup}>
+        <div className={styles.feedbackBtns}>
           <button className={styles.calculateButton} onClick={handleCalculate}>
             Calcular
           </button>
