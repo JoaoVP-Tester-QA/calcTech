@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import MathKeyboard from "../../components/MathKeyboard/MathKeyboard";
 import LoadingScreen from "../../components/LoadingScreen";
+import ResultDisplay from "../../components/resultDisplay/ResultDisplay"; 
 import {
     bolzanoMethod,
     bisectionMethod,
@@ -134,16 +135,26 @@ const EquationsPage: React.FC = () => {
                 </>
             )}
 
-            <div className={styles.btns_submit}>
-                <button onClick={handleCalculate}>Calcular</button>
-                {loading ? (
-                    <LoadingScreen />
-                ) : (
-                    result !== null && <div>Resultado: {result}</div>
-                )}
+<div className={styles.actionsContainer}>
+        {/* Loading ou Resultado */}
+        <div className={styles.resultArea}>
+            {loading ? (
+                <LoadingScreen />
+            ) : (
+                <ResultDisplay result={result || ''} loading={loading} />
+            )}
+        </div>
 
-                <button onClick={() => navigate(-1)}>Voltar</button>
-            </div>
+        {/* Botões de Ação */}
+        <div className={styles.buttonGroup}>
+            <button className={styles.calculateButton} onClick={handleCalculate}>
+                Calcular
+            </button>
+            <button className={styles.backButton} onClick={() => navigate(-1)}>
+                Voltar
+            </button>
+        </div>
+    </div>
         </div>
     );
 };
